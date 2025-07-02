@@ -1,6 +1,6 @@
 # GPU Ray Tracer Concepts
 
-This document explains the key concepts and algorithms used in this GPU ray tracer implementation, featuring a **pure XML scene loading system** and advanced camera features.
+This document explains the key concepts and algorithms used in this GPU ray tracer implementation, featuring a XML scene loading system and advanced camera features.
 
 ## Ray Tracing Fundamentals
 
@@ -140,6 +140,10 @@ struct quad {
 - **Intersection**: Ray-plane intersection with bounds checking
 - **Normal**: Precomputed for efficiency
 - **Usage**: Walls, floors, ceilings, area lights
+
+#### Box Primitive
+- The `<box>` element allows you to define a rectangular prism by center, size, rotation (y-axis), and material.
+- The parser generates the 6 quads for the box.
 
 ### Material System
 The material system uses type tags instead of virtual functions for CUDA compatibility:

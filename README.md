@@ -1,6 +1,11 @@
 # GPU Ray Tracer with CUDA
 
-A high-performance ray tracer implemented using CUDA and C++ with path tracing and Monte Carlo integration, featuring **pure XML scene loading** and advanced material system.
+<p align="center">
+  <img src="renders/cornell_box_hd.png" alt="Cornell Box Render" width="600"/>
+</p>
+<p align="center">Render of a Cornell Box scene produced by this ray tracer.</p>
+
+A high-performance ray tracer implemented using CUDA and C++ with path tracing and Monte Carlo integration, featuring pure XML scene loading and advanced material system.
 
 ## Current Implementation Status
 
@@ -124,6 +129,11 @@ The ray tracer uses **pure XML scene loading** - all scenes are defined in XML f
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <scene name="scene_name">
+  <render>
+    <image_width>1280</image_width>
+    <image_height>720</image_height>
+    <samples_per_pixel>1500</samples_per_pixel>
+  </render>
   <camera>
     <position x="0" y="0" z="0"/>
     <look_at x="0" y="0" z="-1"/>
@@ -149,6 +159,11 @@ The ray tracer uses **pure XML scene loading** - all scenes are defined in XML f
       <center x="0" y="0" z="-3"/>
       <radius>0.5</radius>
     </sphere>
+    <quad material="red">
+      <corner x="-5" y="-5" z="-5"/>
+      <u_edge x="10" y="0" z="0"/>
+      <v_edge x="0" y="0" z="10"/>
+    </quad>
     <box material="metal">
       <center x="1" y="0" z="-2"/>
       <size x="1" y="2" z="1"/>
@@ -157,18 +172,6 @@ The ray tracer uses **pure XML scene loading** - all scenes are defined in XML f
   </objects>
 </scene>
 ```
-
-#### **Box Primitive**
-- The `<box>` element allows you to define a rectangular prism by center, size, rotation (y-axis), and material.
-- The parser automatically generates the 6 quads for the box.
-- Example:
-  ```xml
-  <box material="green">
-    <center x="1.8" y="-3.8" z="-2.2"/>
-    <size x="3.2" y="2.4" z="1.6"/>
-    <rotation y="-15"/>
-  </box>
-  ```
 
 ### Available Scenes
 
@@ -256,17 +259,6 @@ The ray tracer supports four material types with XML configuration:
 - **Properties**: Light source
 - **Usage**: Light bulbs, area lights
 
-## Configuration
-
-You can modify the rendering parameters in `include/constants.h`:
-
-```cpp
-// Image dimensions
-const int image_width = 1280;
-const int image_height = 720;
-const int samples_per_pixel = 1200;
-```
-
 ## Usage
 
 1. **Run the executable**:
@@ -350,7 +342,3 @@ This project uses the following open-source libraries:
 
 - [TinyXML2](https://github.com/leethomason/tinyxml2) — XML parsing (zlib license)
 - [stb_image_write](https://github.com/nothings/stb) — PNG image output (public domain or MIT license)
-
-## License
-
-This project is provided as educational material for learning GPU programming and ray tracing techniques. 
