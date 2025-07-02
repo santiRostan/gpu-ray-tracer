@@ -274,7 +274,7 @@ The ray tracer supports four material types with XML configuration:
 
 ## Key Implementation Lessons
 
-### 🎯 **CUDA-Specific Challenges**
+### **CUDA-Specific Challenges**
 
 1. **Device Code Requirements**
    - All `__device__` and `__host__ __device__` functions must be **inline or in header files**
@@ -290,7 +290,7 @@ The ray tracer supports four material types with XML configuration:
    - Complex inheritance hierarchies are problematic in CUDA
    - **Solution**: Use concrete types with type tags for material identification
 
-### 📁 **XML Integration**
+### **XML Integration**
 
 1. **TinyXML2 Library**
    - Lightweight, header-only XML parser
