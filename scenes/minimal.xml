@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scene name="minimal">
+  <render>
+    <image_width>1280</image_width>
+    <image_height>720</image_height>
+    <samples_per_pixel>1000</samples_per_pixel>
+    <max_depth>15</max_depth>
+  </render>
+  
+  <camera>
+    <position x="0" y="0" z="0"/>
+    <look_at x="0" y="0" z="-1"/>
+    <up x="0" y="1" z="0"/>
+    <fov>60</fov>
+    <aspect_ratio>auto</aspect_ratio>
+    <aperture>0.8</aperture>
+    <focus_distance object="sphere"/>
+  </camera>
+  
+  <materials>
+    <material id="red" type="lambertian">
+      <color r="0.7" g="0.1" b="0.1"/>
+    </material>
+    <material id="ground" type="lambertian">
+      <color r="0.8" g="0.8" b="0.0"/>
+    </material>
+  </materials>
+  
+  <objects>
+    <sphere id="sphere" material="red">
+      <center x="0" y="0" z="-5"/>
+      <radius>0.5</radius>
+    </sphere>
+    <sphere material="ground">
+      <center x="0" y="-1000.5" z="0"/>
+      <radius>1000</radius>
+    </sphere>
+  </objects>
+</scene> 

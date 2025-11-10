@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scene name="complex_scene">
+  <render>
+    <image_width>1280</image_width>
+    <image_height>720</image_height>
+    <samples_per_pixel>5000</samples_per_pixel>
+    <max_depth>15</max_depth>
+  </render>
+  
+  <film>
+    <bloom>
+      <threshold>1.2</threshold>
+      <intensity>0.25</intensity>
+    </bloom>
+    <tone_mapping>
+      <exposure>1.1</exposure>
+      <gamma>2.0</gamma>
+    </tone_mapping>
+    <vignette>
+      <strength>0.12</strength>
+    </vignette>
+  </film>
+  
+  <camera>
+    <position x="5" y="4" z="-1"/>
+    <look_at x="4.6" y="3.4" z="-2"/>
+    <up x="0" y="1" z="0"/>
+    <fov>60</fov>
+    <aspect_ratio>auto</aspect_ratio>
+    <aperture>0.3</aperture>
+    <focus_distance object="green_sphere"/>
+  </camera>
+  
+  <materials>
+    <!-- Gray sphere (glass) -->
+    <material id="gray" type="dielectric">
+      <refraction_index>1.5</refraction_index>
+    </material>
+    <!-- Dark sphere (metal) -->
+    <material id="dark_metal" type="metal">
+      <color r="0.2" g="0.2" b="0.2"/>
+      <fuzz>0.0</fuzz>
+    </material>
+    <!-- Green sphere -->
+    <material id="green" type="lambertian">
+      <color r="0.0" g="0.98" b="0.2"/>
+    </material>
+    <!-- Ceiling -->
+    <material id="ceiling" type="lambertian">
+      <color r="0.55" g="0.59" b="0.55"/>
+    </material>
+    <!-- Back wall (pink) -->
+    <material id="pink_wall" type="lambertian">
+      <color r="1.0" g="0.18" b="0.52"/>
+    </material>
+    <!-- Left wall (mirror) -->
+    <material id="mirror" type="metal">
+      <color r="0.92" g="0.92" b="0.92"/>
+      <fuzz>0.0</fuzz>
+    </material>
+    <!-- Right wall (green) -->
+    <material id="green_wall" type="lambertian">
+      <color r="0.12" g="0.59" b="0.12"/>
+    </material>
+    <!-- Front wall (black) -->
+    <material id="black_wall" type="lambertian">
+      <color r="0.0" g="0.0" b="0.0"/>
+    </material>
+    <!-- Floor (white) -->
+    <material id="floor" type="lambertian">
+      <color r="0.98" g="0.98" b="0.98"/>
+    </material>
+    <!-- White box -->
+    <material id="white_box" type="lambertian">
+      <color r="1.0" g="1.0" b="1.0"/>
+    </material>
+    <!-- Light sources -->
+    <material id="light1" type="emissive">
+      <color r="15.0" g="15.0" b="15.0"/>
+    </material>
+    <material id="light2" type="emissive">
+      <color r="15.0" g="15.0" b="15.0"/>
+    </material>
+  </materials>
+  
+  <objects>
+    <!-- Gray sphere -->
+    <sphere material="gray">
+      <center x="1" y="2" z="-5"/>
+      <radius>1.5</radius>
+    </sphere>
+    
+    <!-- Dark metal sphere -->
+    <sphere material="dark_metal">
+      <center x="5.3" y="1.5" z="-5"/>
+      <radius>1.2</radius>
+    </sphere>
+    
+    <!-- Green sphere (representing cylinder) -->
+    <sphere id="green_sphere" material="green">
+      <center x="3.2" y="1" z="-5"/>
+      <radius>0.75</radius>
+    </sphere>
+    
+    <!-- Ceiling -->
+    <quad material="ceiling">
+      <corner x="-2" y="7" z="-7"/>
+      <u_edge x="10" y="0" z="0"/>
+      <v_edge x="0" y="0" z="11"/>
+    </quad>
+    
+    <!-- Back wall (pink) -->
+    <quad material="pink_wall">
+      <corner x="-2" y="-2" z="-7"/>
+      <u_edge x="10" y="0" z="0"/>
+      <v_edge x="0" y="9" z="0"/>
+    </quad>
+    
+    <!-- Left wall (black mirror) -->
+    <quad material="mirror">
+      <corner x="-2" y="-2" z="-7"/>
+      <u_edge x="0" y="9" z="0"/>
+      <v_edge x="0" y="0" z="11"/>
+    </quad>
+    
+    <!-- Right wall (green) -->
+    <quad material="green_wall">
+      <corner x="8" y="-2" z="-7"/>
+      <u_edge x="0" y="9" z="0"/>
+      <v_edge x="0" y="0" z="11"/>
+    </quad>
+    
+    <!-- Front wall (black) -->
+    <quad material="black_wall">
+      <corner x="-2" y="-2" z="4"/>
+      <u_edge x="10" y="0" z="0"/>
+      <v_edge x="0" y="9" z="0"/>
+    </quad>
+    
+    <!-- Floor -->
+    <quad material="floor">
+      <corner x="-2" y="-2" z="-7"/>
+      <u_edge x="10" y="0" z="0"/>
+      <v_edge x="0" y="0" z="11"/>
+    </quad>
+    
+    <!-- White box (prism) -->
+    <box material="white_box">
+      <center x="3" y="-1" z="-5"/>
+      <size x="8" y="3" z="4"/>
+      <rotation y="0"/>
+    </box>
+    
+    <!-- Light source 1 -->
+    <quad material="light1">
+      <corner x="2.5" y="6.5" z="-5.5"/>
+      <u_edge x="1" y="0" z="0"/>
+      <v_edge x="0" y="0" z="1"/>
+    </quad>
+    
+    <!-- Light source 2 -->
+    <quad material="light2">
+      <corner x="1.5" y="-0.5" z="-0.5"/>
+      <u_edge x="1" y="0" z="0"/>
+      <v_edge x="0" y="0" z="1"/>
+    </quad>
+  </objects>
+</scene> 

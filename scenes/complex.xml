@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scene name="complex">
+  <render>
+    <image_width>1920</image_width>
+    <image_height>1080</image_height>
+    <samples_per_pixel>3000</samples_per_pixel>
+    <max_depth>50</max_depth>
+  </render>
+  
+  <camera>
+    <position x="0" y="0" z="0"/>
+    <look_at x="0" y="0" z="-1"/>
+    <up x="0" y="1" z="0"/>
+    <fov>60</fov>
+    <aspect_ratio>auto</aspect_ratio>
+    <aperture>0.1</aperture>
+    <focus_distance>3.0</focus_distance>
+  </camera>
+  
+  <materials>
+    <material id="ground" type="lambertian">
+      <color r="0.8" g="0.8" b="0.0"/>
+    </material>
+    <material id="blue" type="lambertian">
+      <color r="0.1" g="0.2" b="0.5"/>
+    </material>
+    <material id="gold" type="metal">
+      <color r="0.8" g="0.6" b="0.2"/>
+      <fuzz>0.1</fuzz>
+    </material>
+    <material id="glass" type="dielectric">
+      <ir>1.5</ir>
+    </material>
+    <material id="fuzzy_metal" type="metal">
+      <color r="0.7" g="0.7" b="0.7"/>
+      <fuzz>0.3</fuzz>
+    </material>
+  </materials>
+  
+  <objects>
+    <!-- Ground plane (large sphere) -->
+    <sphere material="ground">
+      <center x="0" y="-1000.5" z="0"/>
+      <radius>1000</radius>
+    </sphere>
+    
+    <!-- Blue sphere -->
+    <sphere material="blue">
+      <center x="0" y="0" z="-3.2"/>
+      <radius>0.5</radius>
+    </sphere>
+    
+    <!-- Gold metal sphere -->
+    <sphere material="gold">
+      <center x="1" y="0" z="-3"/>
+      <radius>0.5</radius>
+    </sphere>
+    
+    <!-- Glass sphere -->
+    <sphere material="glass">
+      <center x="-1" y="0" z="-3"/>
+      <radius>0.5</radius>
+    </sphere>
+    
+    <!-- Fuzzy metal sphere -->
+    <sphere material="fuzzy_metal">
+      <center x="0" y="1" z="-3"/>
+      <radius>0.5</radius>
+    </sphere>
+  </objects>
+</scene> 
