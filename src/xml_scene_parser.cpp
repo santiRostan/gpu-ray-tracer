@@ -127,12 +127,14 @@ SceneData XMLSceneParser::load_scene(const std::string& filename) {
 
         const tinyxml2::XMLElement* intensity_elem = environment_elem->FirstChildElement("intensity");
         if (intensity_elem) {
-            scene_data.environment_settings.intensity = intensity_elem->FloatText();
+            scene_data.environment_settings.intensity =
+                intensity_elem->FloatText(scene_data.environment_settings.intensity);
         }
 
         const tinyxml2::XMLElement* rotation_elem = environment_elem->FirstChildElement("rotation_degrees");
         if (rotation_elem) {
-            scene_data.environment_settings.rotation_degrees = rotation_elem->FloatText();
+            scene_data.environment_settings.rotation_degrees =
+                rotation_elem->FloatText(scene_data.environment_settings.rotation_degrees);
         }
 
         if (scene_data.environment_settings.texture_path.empty()) {

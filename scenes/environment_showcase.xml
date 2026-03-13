@@ -18,7 +18,6 @@
     <look_at x="0.0" y="0.65" z="0.0"/>
     <up x="0" y="1" z="0"/>
     <fov>42</fov>
-    <aspect_ratio>auto</aspect_ratio>
     <aperture>0.05</aperture>
     <focus_distance>6.0</focus_distance>
   </camera>

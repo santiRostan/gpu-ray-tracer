@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cuda_runtime.h>
 #include <cmath>
+#include <stdexcept>
+#include <string>
 #include <vector>
 #include "geometry/hittable.h"
 #include "geometry/bvh.h"
@@ -8,6 +10,16 @@
 #include "scene/camera.h"
 #include "scene/xml_scene_parser.h"
 #include "image/texture_loader.h"
+
+namespace {
+
+void throw_on_cuda_error(cudaError_t error, const std::string& action) {
+    if (error != cudaSuccess) {
+        throw std::runtime_error(action + ": " + cudaGetErrorString(error));
+    }
+}
+
+}
 
 void cleanup_scene(bvh_node*& d_nodes, hittable*& d_objects, material**& d_materials, int num_materials,
                    DeviceEnvironmentMap& env_map) {
@@ -119,15 +131,22 @@ void create_scene_from_xml(
 
         if (has_environment) {
             float* d_env_pixels = nullptr;
-            cudaMalloc(&d_env_pixels, env_texture.data.size() * sizeof(float));
-            cudaMemcpy(d_env_pixels, env_texture.data.data(), env_texture.data.size() * sizeof(float), cudaMemcpyHostToDevice);
+            throw_on_cuda_error(
+                cudaMalloc(&d_env_pixels, env_texture.data.size() * sizeof(float)),
+                "Failed to allocate environment texture on the GPU");
+            const cudaError_t copy_error = cudaMemcpy(
+                d_env_pixels, env_texture.data.data(), env_texture.data.size() * sizeof(float), cudaMemcpyHostToDevice);
+            if (copy_error != cudaSuccess) {
+                cudaFree(d_env_pixels);
+                throw_on_cuda_error(copy_error, "Failed to upload environment texture to the GPU");
+            }
 
             env_map.pixels = d_env_pixels;
             env_map.width = env_texture.width;
             env_map.height = env_texture.height;
             env_map.intensity = scene_data.environment_settings.intensity;
             env_map.rotation_radians = scene_data.environment_settings.rotation_degrees * static_cast<float>(M_PI / 180.0);
-            env_map.enabled = true;
+            env_map.enabled = d_env_pixels != nullptr;
         }
 
         // Cleanup host-side temp array
