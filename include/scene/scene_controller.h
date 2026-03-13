@@ -1,11 +1,14 @@
 #pragma once
 #include "material.h"
 #include "image/film.h"
+#include "scene/camera.h"
+#include "core/environment_map.h"
 #include <string>
 #include "geometry/hittable.h"
 #include "geometry/bvh.h"
 
-void cleanup_scene(bvh_node*& d_nodes, hittable*& d_objects, material**& d_materials, int num_materials);
+void cleanup_scene(bvh_node*& d_nodes, hittable*& d_objects, material**& d_materials, int num_materials,
+                   DeviceEnvironmentMap& env_map);
 
 void create_scene_from_xml(
     bvh_node*& d_nodes,
@@ -20,5 +23,6 @@ void create_scene_from_xml(
     int& image_height,
     int& samples_per_pixel,
     int& max_depth,
-    Film::FilmSettings& film_settings
-); 
+    Film::FilmSettings& film_settings,
+    DeviceEnvironmentMap& env_map
+);

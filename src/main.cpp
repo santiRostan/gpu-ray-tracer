@@ -64,6 +64,7 @@ int main() {
         int num_objects = 0;
         material** d_materials = nullptr;
         int num_materials = 0;
+        DeviceEnvironmentMap env_map;
         camera scene_camera;
 
         // Render parameters (will be set by XML scene)
@@ -72,12 +73,12 @@ int main() {
 
         create_scene_from_xml(
             d_nodes, d_objects, num_nodes, num_objects, d_materials, num_materials, 
-            xml_filename, scene_camera, image_width, image_height, samples_per_pixel, max_depth, film_settings);
+            xml_filename, scene_camera, image_width, image_height, samples_per_pixel, max_depth, film_settings, env_map);
 
         render_scene(image_width, image_height, samples_per_pixel, max_depth,
-                     d_nodes, d_objects, xml_filename, scene_camera, film_settings);
+                     d_nodes, d_objects, xml_filename, scene_camera, film_settings, env_map);
 
-        cleanup_scene(d_nodes, d_objects, d_materials, num_materials);
+        cleanup_scene(d_nodes, d_objects, d_materials, num_materials, env_map);
 
         cout << "Scene rendered successfully!" << endl;
     } catch (const runtime_error& e) {
@@ -86,4 +87,4 @@ int main() {
     }
 
     return 0;
-} 
+}

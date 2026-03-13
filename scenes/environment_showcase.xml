@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scene name="environment_showcase">
+  <render>
+    <image_width>1280</image_width>
+    <image_height>720</image_height>
+    <samples_per_pixel>2500</samples_per_pixel>
+    <max_depth>20</max_depth>
+  </render>
+
+  <environment>
+    <texture>environments/studio_small.ppm</texture>
+    <intensity>1.35</intensity>
+    <rotation_degrees>25.0</rotation_degrees>
+  </environment>
+
+  <camera>
+    <position x="0.8" y="1.5" z="6.5"/>
+    <look_at x="0.0" y="0.65" z="0.0"/>
+    <up x="0" y="1" z="0"/>
+    <fov>42</fov>
+    <aspect_ratio>auto</aspect_ratio>
+    <aperture>0.05</aperture>
+    <focus_distance>6.0</focus_distance>
+  </camera>
+
+  <materials>
+    <material id="ground" type="lambertian">
+      <color r="0.78" g="0.78" b="0.82"/>
+    </material>
+    <material id="warm_diffuse" type="lambertian">
+      <color r="0.84" g="0.62" b="0.38"/>
+    </material>
+    <material id="metal" type="metal">
+      <color r="0.92" g="0.92" b="0.95"/>
+      <fuzz>0.02</fuzz>
+    </material>
+    <material id="glass" type="dielectric">
+      <refraction_index>1.5</refraction_index>
+    </material>
+  </materials>
+
+  <objects>
+    <sphere material="ground">
+      <center x="0" y="-1000.4" z="0"/>
+      <radius>1000</radius>
+    </sphere>
+
+    <sphere material="metal">
+      <center x="-1.35" y="0.95" z="0.0"/>
+      <radius>0.95</radius>
+    </sphere>
+
+    <sphere material="glass">
+      <center x="1.25" y="0.85" z="-0.4"/>
+      <radius>0.85</radius>
+    </sphere>
+
+    <sphere material="warm_diffuse">
+      <center x="0.1" y="0.45" z="-1.8"/>
+      <radius>0.45</radius>
+    </sphere>
+  </objects>
+</scene>

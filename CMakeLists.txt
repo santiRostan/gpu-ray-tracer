@@ -40,6 +40,7 @@ set(SOURCES
     src/renderer.cpp
     src/scene_controller.cpp
     src/image_writer.cpp
+    src/texture_loader.cpp
     src/cuda_utils.cpp
     src/xml_scene_parser.cpp
     src/tinyxml2.cpp

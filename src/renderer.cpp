@@ -14,7 +14,7 @@
 
 void render_scene(int image_width, int image_height, int samples_per_pixel, int max_depth,
                   bvh_node* d_nodes, hittable* d_objects, const std::string& scene_name, const camera& cam,
-                  const Film::FilmSettings& film_settings) {
+                  const Film::FilmSettings& film_settings, DeviceEnvironmentMap env_map) {
     std::cout << "Rendering: " << image_width << "x" << image_height << " | " 
               << samples_per_pixel << " spp | " << max_depth << " depth" << std::endl;
     const auto total_start = std::chrono::high_resolution_clock::now();
@@ -32,7 +32,7 @@ void render_scene(int image_width, int image_height, int samples_per_pixel, int 
     // Launch kernel
     launch_render_kernel(
         d_image, image_width, image_height, samples_per_pixel, max_depth,
-        d_nodes, d_objects, cam  // Re-enable BVH
+        d_nodes, d_objects, cam, env_map
     );
     
     // Get performance metrics

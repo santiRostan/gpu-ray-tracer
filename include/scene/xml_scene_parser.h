@@ -7,6 +7,7 @@
 #include "material.h"
 #include "camera.h"
 #include "image/film.h"
+#include "core/environment_map.h"
 #include "tinyxml2/tinyxml2.h"
 
 // Scene data structure to hold parsed XML data
@@ -35,6 +36,9 @@ struct SceneData {
     
     // Film settings
     Film::FilmSettings film_settings;
+
+    // Environment settings
+    EnvironmentSettings environment_settings;
     
     // Cleanup
     SceneData() = default;
@@ -65,4 +69,4 @@ private:
     static color parse_color(const tinyxml2::XMLElement* elem);
     static float parse_float(const tinyxml2::XMLElement* elem, const char* attr);
     static std::string parse_string(const tinyxml2::XMLElement* elem, const char* attr);
-}; 
+};

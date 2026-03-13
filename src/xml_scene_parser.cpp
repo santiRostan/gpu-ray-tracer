@@ -1,4 +1,5 @@
 #include "scene/xml_scene_parser.h"
+#include <filesystem>
 #include <iostream>
 #include <stdexcept>
 #include <cmath>
@@ -20,6 +21,7 @@ SceneData XMLSceneParser::load_scene(const std::string& filename) {
     if (result != tinyxml2::XML_SUCCESS) {
         throw std::runtime_error("Failed to load XML file: " + filename);
     }
+    const std::filesystem::path scene_directory = std::filesystem::path(filename).parent_path();
     const tinyxml2::XMLElement* scene_elem = doc.FirstChildElement("scene");
     if (!scene_elem) {
         throw std::runtime_error("No <scene> element found in XML file");
@@ -107,6 +109,34 @@ SceneData XMLSceneParser::load_scene(const std::string& filename) {
             scene_data.film_settings.vignette_enabled = true;
             const tinyxml2::XMLElement* strength_elem = vignette_elem->FirstChildElement("strength");
             if (strength_elem) scene_data.film_settings.vignette_strength = strength_elem->FloatText();
+        }
+    }
+    // Parse environment settings
+    const tinyxml2::XMLElement* environment_elem = scene_elem->FirstChildElement("environment");
+    if (environment_elem) {
+        const tinyxml2::XMLElement* texture_elem = environment_elem->FirstChildElement("texture");
+        if (texture_elem && texture_elem->GetText()) {
+            std::filesystem::path texture_path(texture_elem->GetText());
+            if (texture_path.is_relative()) {
+                texture_path = scene_directory / texture_path;
+            }
+
+            scene_data.environment_settings.enabled = true;
+            scene_data.environment_settings.texture_path = texture_path.lexically_normal().string();
+        }
+
+        const tinyxml2::XMLElement* intensity_elem = environment_elem->FirstChildElement("intensity");
+        if (intensity_elem) {
+            scene_data.environment_settings.intensity = intensity_elem->FloatText();
+        }
+
+        const tinyxml2::XMLElement* rotation_elem = environment_elem->FirstChildElement("rotation_degrees");
+        if (rotation_elem) {
+            scene_data.environment_settings.rotation_degrees = rotation_elem->FloatText();
+        }
+
+        if (scene_data.environment_settings.texture_path.empty()) {
+            scene_data.environment_settings.enabled = false;
         }
     }
     // Parse materials
@@ -500,4 +530,4 @@ std::string XMLSceneParser::parse_string(const tinyxml2::XMLElement* elem, const
         return elem->Attribute(attr);
     }
     return "";
-} 
+}
