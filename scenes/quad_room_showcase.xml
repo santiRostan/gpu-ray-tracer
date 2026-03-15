@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scene name="quad_room_showcase">
+  <render>
+    <image_width>1280</image_width>
+    <image_height>720</image_height>
+    <samples_per_pixel>3000</samples_per_pixel>
+    <max_depth>20</max_depth>
+  </render>
+  <environment>
+    <texture>environments/studio_softboxes.hdr</texture>
+    <intensity>2.2</intensity>
+    <rotation_degrees>18</rotation_degrees>
+  </environment>
+  <film>
+    <tone_mapping>
+      <exposure>1.35</exposure>
+      <gamma>2.2</gamma>
+    </tone_mapping>
+    <bloom>
+      <threshold>1.2</threshold>
+      <intensity>0.04</intensity>
+    </bloom>
+  </film>
+  <camera>
+    <position x="0" y="2.4" z="8.2" />
+    <look_at x="0" y="2.1" z="0.6" />
+    <up x="0" y="1" z="0" />
+    <fov>48</fov>
+    <aperture>0</aperture>
+    <focus_distance>7.7</focus_distance>
+  </camera>
+  <materials>
+    <material id="white" type="lambertian">
+      <color r="0.8" g="0.8" b="0.8" />
+    </material>
+    <material id="red" type="lambertian">
+      <color r="0.8" g="0.22" b="0.22" />
+    </material>
+    <material id="blue" type="lambertian">
+      <color r="0.22" g="0.28" b="0.82" />
+    </material>
+    <material id="metal" type="metal">
+      <color r="0.84" g="0.78" b="0.7" />
+      <fuzz>0.14</fuzz>
+    </material>
+    <material id="green" type="lambertian">
+      <color r="0.32" g="0.72" b="0.38" />
+    </material>
+    <material id="glass" type="dielectric">
+      <refraction_index>1.5</refraction_index>
+    </material>
+  </materials>
+  <objects>
+    <quad id="floor" material="white">
+      <corner x="-4" y="0" z="-5" />
+      <u_edge x="0" y="0" z="14" />
+      <v_edge x="8" y="0" z="0" />
+    </quad>
+    <quad id="left_wall" material="red">
+      <corner x="-4" y="0" z="-5" />
+      <u_edge x="0" y="7" z="0" />
+      <v_edge x="0" y="0" z="14" />
+    </quad>
+    <quad id="right_wall" material="blue">
+      <corner x="4" y="0" z="-5" />
+      <u_edge x="0" y="0" z="14" />
+      <v_edge x="0" y="7" z="0" />
+    </quad>
+    <quad id="back_wall" material="white">
+      <corner x="-4" y="0" z="-5" />
+      <u_edge x="8" y="0" z="0" />
+      <v_edge x="0" y="7" z="0" />
+    </quad>
+    <quad id="front_wall" material="white">
+      <corner x="-4" y="0" z="9" />
+      <u_edge x="0" y="7" z="0" />
+      <v_edge x="8" y="0" z="0" />
+    </quad>
+    <quad id="ceiling_back" material="white">
+      <corner x="-4" y="7" z="-5" />
+      <u_edge x="8" y="0" z="0" />
+      <v_edge x="0" y="0" z="4.7" />
+    </quad>
+    <quad id="ceiling_front" material="white">
+      <corner x="-4" y="7" z="3.1" />
+      <u_edge x="8" y="0" z="0" />
+      <v_edge x="0" y="0" z="5.9" />
+    </quad>
+    <quad id="ceiling_left_strip" material="white">
+      <corner x="-4" y="7" z="-0.3" />
+      <u_edge x="2" y="0" z="0" />
+      <v_edge x="0" y="0" z="3.4" />
+    </quad>
+    <quad id="ceiling_right_strip" material="white">
+      <corner x="2" y="7" z="-0.3" />
+      <u_edge x="2" y="0" z="0" />
+      <v_edge x="0" y="0" z="3.4" />
+    </quad>
+    <box id="left_tower" material="metal">
+      <center x="-1.35" y="2.3" z="-1.4" />
+      <size x="1.8" y="4.6" z="1.8" />
+      <rotation y="-20" />
+    </box>
+    <box id="right_cube" material="green">
+      <center x="1.65" y="0.85" z="0.45" />
+      <size x="1.7" y="1.7" z="1.7" />
+      <rotation y="15" />
+    </box>
+    <sphere id="glass_orb" material="glass">
+      <center x="0.25" y="0.65" z="2.35" />
+      <radius>0.65</radius>
+    </sphere>
+  </objects>
+</scene>

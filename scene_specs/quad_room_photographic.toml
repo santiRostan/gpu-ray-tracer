@@ -1,0 +1,155 @@
+# Photographic HDRI variant of the quad room, using a real studio panorama.
+name = "quad_room_photographic"
+output = "scenes/quad_room_photographic.xml"
+
+[render]
+image_width = 1280
+image_height = 720
+samples_per_pixel = 8000
+max_depth = 16
+
+[draft_render]
+image_width = 640
+image_height = 360
+samples_per_pixel = 384
+max_depth = 10
+
+[environment]
+texture = "environments/studio_small_01_1k.hdr"
+intensity = 1.15
+rotation_degrees = 115.0
+
+[film.tone_mapping]
+exposure = 1.0
+gamma = 2.2
+
+[film.bloom]
+threshold = 1.15
+intensity = 0.05
+
+[camera]
+position = [0.0, 1.9, 7.8]
+look_at = [0.0, 1.7, 0.8]
+up = [0.0, 1.0, 0.0]
+fov = 48.0
+aperture = 0.0
+focus_distance = 7.2
+
+[[materials]]
+id = "white"
+type = "lambertian"
+color = [0.64, 0.64, 0.62]
+
+[[materials]]
+id = "backdrop"
+type = "lambertian"
+color = [0.66, 0.64, 0.6]
+
+[[materials]]
+id = "red"
+type = "lambertian"
+color = [0.78, 0.26, 0.2]
+
+[[materials]]
+id = "blue"
+type = "lambertian"
+color = [0.2, 0.3, 0.78]
+
+[[materials]]
+id = "metal"
+type = "metal"
+color = [0.88, 0.84, 0.78]
+fuzz = 0.08
+
+[[materials]]
+id = "silver"
+type = "metal"
+color = [0.92, 0.93, 0.95]
+fuzz = 0.03
+
+[[materials]]
+id = "green"
+type = "lambertian"
+color = [0.34, 0.66, 0.46]
+
+[[items]]
+kind = "quad"
+id = "floor"
+material = "white"
+corner = [-5.5, 0.0, -6.0]
+u_edge = [0.0, 0.0, 16.0]
+v_edge = [11.0, 0.0, 0.0]
+
+[[items]]
+kind = "quad"
+id = "left_wall"
+material = "red"
+corner = [-5.0, 0.0, -4.0]
+u_edge = [0.0, 5.8, 0.0]
+v_edge = [0.0, 0.0, 7.0]
+
+[[items]]
+kind = "quad"
+id = "right_wall"
+material = "blue"
+corner = [5.0, 0.0, -4.0]
+u_edge = [0.0, 0.0, 7.0]
+v_edge = [0.0, 5.8, 0.0]
+
+[[items]]
+kind = "quad"
+id = "back_wall"
+material = "backdrop"
+corner = [-5.0, 0.0, -4.0]
+u_edge = [10.0, 0.0, 0.0]
+v_edge = [0.0, 5.8, 0.0]
+
+[[items]]
+kind = "quad"
+id = "ceiling_back"
+material = "backdrop"
+corner = [-5.0, 5.8, -4.0]
+u_edge = [10.0, 0.0, 0.0]
+v_edge = [0.0, 0.0, 2.8]
+
+[[items]]
+kind = "quad"
+id = "ceiling_left"
+material = "backdrop"
+corner = [-5.0, 5.8, -1.2]
+u_edge = [3.2, 0.0, 0.0]
+v_edge = [0.0, 0.0, 4.2]
+
+[[items]]
+kind = "quad"
+id = "ceiling_right"
+material = "backdrop"
+corner = [1.8, 5.8, -1.2]
+u_edge = [3.2, 0.0, 0.0]
+v_edge = [0.0, 0.0, 4.2]
+
+[[items]]
+kind = "box"
+id = "left_tower"
+material = "metal"
+placement = "on_floor"
+at = [-1.55, -1.6]
+size = [1.65, 4.1, 1.65]
+rotation_y = -18.0
+
+[[items]]
+kind = "box"
+id = "right_cube"
+material = "green"
+placement = "on_floor"
+at = [1.75, 0.65]
+size = [1.85, 1.85, 1.85]
+rotation_y = 12.0
+
+[[items]]
+kind = "sphere"
+id = "glass_orb"
+material = "silver"
+placement = "on_floor"
+at = [0.15, 2.55]
+radius = 0.72

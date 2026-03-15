@@ -1,0 +1,72 @@
+# Copy this file, rename `name`, and adjust materials/items as needed.
+name = "template_product_shot"
+output = "scenes/template_product_shot.xml"
+
+[render]
+image_width = 1280
+image_height = 720
+samples_per_pixel = 2500
+max_depth = 18
+
+[draft_render]
+image_width = 640
+image_height = 360
+samples_per_pixel = 96
+max_depth = 10
+
+[environment]
+texture = "environments/studio_softboxes.hdr"
+intensity = 0.55
+rotation_degrees = 10.0
+
+[film.tone_mapping]
+exposure = 1.05
+gamma = 2.2
+
+[camera]
+frame_target = "hero"
+view_direction = [0.05, 0.14, 1.0]
+target_offset = [0.0, 0.15, 0.0]
+distance_scale = 1.2
+fov = 28.0
+aperture = 0.02
+
+[[materials]]
+id = "floor"
+type = "lambertian"
+color = [0.9, 0.91, 0.94]
+
+[[materials]]
+id = "pedestal"
+type = "lambertian"
+color = [0.16, 0.17, 0.2]
+
+[[materials]]
+id = "hero_material"
+type = "metal"
+color = [0.95, 0.95, 0.98]
+fuzz = 0.02
+
+[[items]]
+kind = "floor_quad"
+id = "floor_plane"
+material = "floor"
+center = [0.0, 0.0, 0.0]
+size = [16.0, 16.0]
+
+[[items]]
+kind = "box"
+id = "hero_base"
+material = "pedestal"
+placement = "on_floor"
+at = [0.0, 0.0]
+size = [1.6, 0.7, 1.6]
+
+[[items]]
+kind = "sphere"
+id = "hero"
+material = "hero_material"
+placement = "on_top_of"
+target = "hero_base"
+radius = 0.95
+offset = [0.0, 0.0, 0.0]

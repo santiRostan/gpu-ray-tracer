@@ -1,0 +1,91 @@
+# Copy this file to block out a small gallery-style arrangement.
+name = "template_gallery_pair"
+output = "scenes/template_gallery_pair.xml"
+
+[render]
+image_width = 1280
+image_height = 720
+samples_per_pixel = 2800
+max_depth = 18
+
+[draft_render]
+image_width = 640
+image_height = 360
+samples_per_pixel = 96
+max_depth = 10
+
+[environment]
+texture = "environments/studio_softboxes.hdr"
+intensity = 0.75
+rotation_degrees = 18.0
+
+[camera]
+frame = "all"
+view_direction = [0.08, 0.14, 1.0]
+target_offset = [0.0, 0.2, 0.0]
+distance_scale = 1.18
+fov = 32.0
+aperture = 0.015
+
+[[materials]]
+id = "floor"
+type = "lambertian"
+color = [0.88, 0.89, 0.92]
+
+[[materials]]
+id = "pedestal"
+type = "lambertian"
+color = [0.18, 0.19, 0.22]
+
+[[materials]]
+id = "bronze"
+type = "metal"
+color = [0.78, 0.55, 0.33]
+fuzz = 0.05
+
+[[materials]]
+id = "glass"
+type = "dielectric"
+refraction_index = 1.5
+
+[[items]]
+kind = "floor_quad"
+id = "floor_plane"
+material = "floor"
+center = [0.0, 0.0, 0.0]
+size = [18.0, 18.0]
+
+[[items]]
+kind = "box"
+id = "left_plinth"
+material = "pedestal"
+placement = "on_floor"
+at = [-1.8, 0.3]
+size = [1.5, 0.75, 1.5]
+
+[[items]]
+kind = "box"
+id = "right_plinth"
+material = "pedestal"
+placement = "on_floor"
+at = [1.7, -0.4]
+size = [1.1, 0.4, 1.1]
+
+[[items]]
+kind = "box"
+id = "bronze_piece"
+material = "bronze"
+placement = "on_top_of"
+target = "left_plinth"
+size = [0.9, 1.6, 0.9]
+rotation_y = 12.0
+offset = [0.0, 0.0, 0.0]
+
+[[items]]
+kind = "sphere"
+id = "glass_piece"
+material = "glass"
+placement = "on_top_of"
+target = "right_plinth"
+radius = 0.48
+offset = [0.0, 0.0, 0.0]

@@ -1,0 +1,164 @@
+name = "quad_room_showcase"
+output = "scenes/quad_room_showcase.xml"
+
+[render]
+image_width = 1280
+image_height = 720
+samples_per_pixel = 3000
+max_depth = 20
+
+[draft_render]
+image_width = 640
+image_height = 360
+samples_per_pixel = 128
+max_depth = 10
+
+[environment]
+texture = "environments/studio_softboxes.hdr"
+intensity = 2.2
+rotation_degrees = 18.0
+
+[film.tone_mapping]
+exposure = 1.35
+gamma = 2.2
+
+[film.bloom]
+threshold = 1.2
+intensity = 0.04
+
+[camera]
+position = [0.0, 2.4, 8.2]
+look_at = [0.0, 2.1, 0.6]
+up = [0.0, 1.0, 0.0]
+fov = 48.0
+aperture = 0.0
+focus_distance = 7.7
+
+[[materials]]
+id = "white"
+type = "lambertian"
+color = [0.8, 0.8, 0.8]
+
+[[materials]]
+id = "red"
+type = "lambertian"
+color = [0.8, 0.22, 0.22]
+
+[[materials]]
+id = "blue"
+type = "lambertian"
+color = [0.22, 0.28, 0.82]
+
+[[materials]]
+id = "metal"
+type = "metal"
+color = [0.84, 0.78, 0.7]
+fuzz = 0.14
+
+[[materials]]
+id = "green"
+type = "lambertian"
+color = [0.32, 0.72, 0.38]
+
+[[materials]]
+id = "glass"
+type = "dielectric"
+refraction_index = 1.5
+
+[[items]]
+kind = "quad"
+id = "floor"
+material = "white"
+corner = [-4.0, 0.0, -5.0]
+u_edge = [0.0, 0.0, 14.0]
+v_edge = [8.0, 0.0, 0.0]
+
+[[items]]
+kind = "quad"
+id = "left_wall"
+material = "red"
+corner = [-4.0, 0.0, -5.0]
+u_edge = [0.0, 7.0, 0.0]
+v_edge = [0.0, 0.0, 14.0]
+
+[[items]]
+kind = "quad"
+id = "right_wall"
+material = "blue"
+corner = [4.0, 0.0, -5.0]
+u_edge = [0.0, 0.0, 14.0]
+v_edge = [0.0, 7.0, 0.0]
+
+[[items]]
+kind = "quad"
+id = "back_wall"
+material = "white"
+corner = [-4.0, 0.0, -5.0]
+u_edge = [8.0, 0.0, 0.0]
+v_edge = [0.0, 7.0, 0.0]
+
+[[items]]
+kind = "quad"
+id = "front_wall"
+material = "white"
+corner = [-4.0, 0.0, 9.0]
+u_edge = [0.0, 7.0, 0.0]
+v_edge = [8.0, 0.0, 0.0]
+
+[[items]]
+kind = "quad"
+id = "ceiling_back"
+material = "white"
+corner = [-4.0, 7.0, -5.0]
+u_edge = [8.0, 0.0, 0.0]
+v_edge = [0.0, 0.0, 4.7]
+
+[[items]]
+kind = "quad"
+id = "ceiling_front"
+material = "white"
+corner = [-4.0, 7.0, 3.1]
+u_edge = [8.0, 0.0, 0.0]
+v_edge = [0.0, 0.0, 5.9]
+
+[[items]]
+kind = "quad"
+id = "ceiling_left_strip"
+material = "white"
+corner = [-4.0, 7.0, -0.3]
+u_edge = [2.0, 0.0, 0.0]
+v_edge = [0.0, 0.0, 3.4]
+
+[[items]]
+kind = "quad"
+id = "ceiling_right_strip"
+material = "white"
+corner = [2.0, 7.0, -0.3]
+u_edge = [2.0, 0.0, 0.0]
+v_edge = [0.0, 0.0, 3.4]
+
+[[items]]
+kind = "box"
+id = "left_tower"
+material = "metal"
+placement = "on_floor"
+at = [-1.35, -1.4]
+size = [1.8, 4.6, 1.8]
+rotation_y = -20.0
+
+[[items]]
+kind = "box"
+id = "right_cube"
+material = "green"
+placement = "on_floor"
+at = [1.65, 0.45]
+size = [1.7, 1.7, 1.7]
+rotation_y = 15.0
+
+[[items]]
+kind = "sphere"
+id = "glass_orb"
+material = "glass"
+placement = "on_floor"
+at = [0.25, 2.35]
+radius = 0.65

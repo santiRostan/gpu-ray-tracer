@@ -1,0 +1,121 @@
+name = "studio_pedestals"
+output = "scenes/studio_pedestals.xml"
+
+[render]
+image_width = 1280
+image_height = 720
+samples_per_pixel = 3000
+max_depth = 20
+
+[environment]
+texture = "environments/studio_softboxes.hdr"
+intensity = 0.6
+rotation_degrees = 14.0
+
+[film.tone_mapping]
+exposure = 1.1
+gamma = 2.2
+
+[film.bloom]
+threshold = 1.25
+intensity = 0.05
+
+[camera]
+frame = "all"
+view_direction = [0.06, 0.16, 1.0]
+target_offset = [0.0, 0.15, -0.1]
+distance_scale = 1.08
+up = [0.0, 1.0, 0.0]
+fov = 30.0
+aperture = 0.02
+
+[draft_render]
+image_width = 640
+image_height = 360
+samples_per_pixel = 128
+max_depth = 10
+
+[[materials]]
+id = "floor"
+type = "lambertian"
+color = [0.9, 0.91, 0.94]
+
+[[materials]]
+id = "pedestal"
+type = "lambertian"
+color = [0.16, 0.17, 0.2]
+
+[[materials]]
+id = "chrome"
+type = "metal"
+color = [0.95, 0.95, 0.98]
+fuzz = 0.01
+
+[[materials]]
+id = "glass"
+type = "dielectric"
+refraction_index = 1.5
+
+[[materials]]
+id = "gold"
+type = "metal"
+color = [1.0, 0.79, 0.36]
+fuzz = 0.03
+
+[[items]]
+kind = "floor_quad"
+id = "floor_plane"
+material = "floor"
+center = [0.0, 0.0, 0.5]
+size = [18.0, 18.0]
+
+[[items]]
+kind = "box"
+id = "left_plinth"
+material = "pedestal"
+placement = "on_floor"
+at = [-2.2, 0.4]
+size = [1.7, 0.8, 1.7]
+
+[[items]]
+kind = "box"
+id = "right_plinth"
+material = "pedestal"
+placement = "on_floor"
+at = [2.25, -0.5]
+size = [1.25, 0.45, 1.25]
+
+[[items]]
+kind = "sphere"
+id = "chrome_orb"
+material = "chrome"
+placement = "on_top_of"
+target = "left_plinth"
+radius = 0.95
+offset = [0.0, 0.0, 0.0]
+
+[[items]]
+kind = "sphere"
+id = "glass_orb"
+material = "glass"
+placement = "on_floor"
+at = [0.2, -0.1]
+radius = 0.9
+
+[[items]]
+kind = "box"
+id = "gold_monolith"
+material = "gold"
+placement = "on_floor"
+at = [0.05, -2.1]
+size = [1.05, 2.4, 1.05]
+rotation_y = 14.0
+
+[[items]]
+kind = "sphere"
+id = "accent_chrome"
+material = "chrome"
+placement = "on_top_of"
+target = "right_plinth"
+radius = 0.45
+offset = [0.0, 0.0, 0.0]

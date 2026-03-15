@@ -8,8 +8,8 @@
   </render>
 
   <environment>
-    <texture>environments/studio_small.ppm</texture>
-    <intensity>1.35</intensity>
+    <texture>environments/studio_softboxes.hdr</texture>
+    <intensity>0.45</intensity>
     <rotation_degrees>25.0</rotation_degrees>
   </environment>
 
@@ -40,7 +40,7 @@
 
   <objects>
     <sphere material="ground">
-      <center x="0" y="-1000.4" z="0"/>
+      <center x="0" y="-1000.0" z="0"/>
       <radius>1000</radius>
     </sphere>
 

@@ -13,9 +13,16 @@ __device__ float reflectance(float cosine, float ref_idx) {
 
 // Scatter functions for each material type (device-only)
 __device__ bool lambertian_scatter(const lambertian* mat, const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered, curandState* state) {
-    auto scatter_direction = rec.normal + random_unit_vector(state);
-    if (scatter_direction.near_zero())
+    const vec3 w = unit_vector(rec.normal);
+    const vec3 a = fabsf(w.x()) > 0.9f ? vec3(0.0f, 1.0f, 0.0f) : vec3(1.0f, 0.0f, 0.0f);
+    const vec3 v = unit_vector(cross(w, a));
+    const vec3 u = cross(v, w);
+    const vec3 local_direction = random_cosine_direction(state);
+    vec3 scatter_direction =
+        unit_vector(local_direction.x() * u + local_direction.y() * v + local_direction.z() * w);
+    if (scatter_direction.near_zero()) {
         scatter_direction = rec.normal;
+    }
     scattered = ray(rec.p, scatter_direction);
     attenuation = mat->albedo;
     return true;

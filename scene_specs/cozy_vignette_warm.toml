@@ -1,0 +1,297 @@
+name = "cozy_vignette_warm"
+output = "scenes/cozy_vignette_warm.xml"
+
+[render]
+image_width = 1280
+image_height = 720
+samples_per_pixel = 10000
+max_depth = 12
+
+[draft_render]
+image_width = 640
+image_height = 360
+samples_per_pixel = 384
+max_depth = 10
+
+[environment]
+texture = "environments/warm_reception_dinner_1k.hdr"
+intensity = 0.86
+rotation_degrees = 248.0
+
+[film.tone_mapping]
+exposure = 0.97
+gamma = 2.2
+
+[film.bloom]
+threshold = 1.2
+intensity = 0.03
+
+[camera]
+position = [2.65, 1.55, 4.15]
+look_at = [-0.2, 1.32, -2.95]
+up = [0.0, 1.0, 0.0]
+fov = 33.0
+aperture = 0.0
+focus_distance = 7.7
+
+[[materials]]
+id = "plaster"
+type = "lambertian"
+color = [0.67, 0.64, 0.61]
+
+[[materials]]
+id = "ceiling"
+type = "lambertian"
+color = [0.61, 0.58, 0.55]
+
+[[materials]]
+id = "floor"
+type = "lambertian"
+color = [0.34, 0.24, 0.16]
+
+[[materials]]
+id = "wood"
+type = "lambertian"
+color = [0.28, 0.19, 0.12]
+
+[[materials]]
+id = "fabric"
+type = "lambertian"
+color = [0.45, 0.39, 0.32]
+
+[[materials]]
+id = "cushion"
+type = "lambertian"
+color = [0.56, 0.59, 0.5]
+
+[[materials]]
+id = "ceramic"
+type = "lambertian"
+color = [0.72, 0.71, 0.66]
+
+[[materials]]
+id = "frame"
+type = "lambertian"
+color = [0.13, 0.1, 0.08]
+
+[[materials]]
+id = "art"
+type = "lambertian"
+color = [0.35, 0.46, 0.34]
+
+[[materials]]
+id = "book_olive"
+type = "lambertian"
+color = [0.32, 0.36, 0.23]
+
+[[materials]]
+id = "book_clay"
+type = "lambertian"
+color = [0.52, 0.33, 0.22]
+
+[[materials]]
+id = "book_linen"
+type = "lambertian"
+color = [0.72, 0.67, 0.58]
+
+[[materials]]
+id = "rug"
+type = "lambertian"
+color = [0.33, 0.43, 0.39]
+
+[[materials]]
+id = "magazine_cover"
+type = "lambertian"
+color = [0.62, 0.49, 0.36]
+
+[[materials]]
+id = "magazine_paper"
+type = "lambertian"
+color = [0.74, 0.69, 0.62]
+
+[[items]]
+kind = "quad"
+id = "floor_plane"
+material = "floor"
+corner = [-5.5, 0.0, -5.5]
+u_edge = [0.0, 0.0, 11.5]
+v_edge = [10.5, 0.0, 0.0]
+
+[[items]]
+kind = "quad"
+id = "back_wall"
+material = "plaster"
+corner = [-4.8, 0.0, -4.4]
+u_edge = [8.4, 0.0, 0.0]
+v_edge = [0.0, 5.6, 0.0]
+
+[[items]]
+kind = "quad"
+id = "left_wall"
+material = "plaster"
+corner = [-4.8, 0.0, -4.4]
+u_edge = [0.0, 5.6, 0.0]
+v_edge = [0.0, 0.0, 8.6]
+
+[[items]]
+kind = "quad"
+id = "ceiling_back"
+material = "ceiling"
+corner = [-4.8, 5.6, -4.4]
+u_edge = [8.4, 0.0, 0.0]
+v_edge = [0.0, 0.0, 2.4]
+
+[[items]]
+kind = "quad"
+id = "ceiling_left"
+material = "ceiling"
+corner = [-4.8, 5.6, -2.0]
+u_edge = [3.0, 0.0, 0.0]
+v_edge = [0.0, 0.0, 4.6]
+
+[[items]]
+kind = "box"
+id = "left_support"
+material = "wood"
+placement = "on_floor"
+at = [-1.7, -3.85]
+size = [0.22, 1.7, 0.44]
+
+[[items]]
+kind = "box"
+id = "right_support"
+material = "wood"
+placement = "on_floor"
+at = [1.25, -3.85]
+size = [0.22, 1.7, 0.44]
+
+[[items]]
+kind = "box"
+id = "table_top"
+material = "wood"
+placement = "on_top_of"
+target = "left_support"
+size = [3.45, 0.16, 0.52]
+offset = [1.475, 0.0, 0.0]
+
+[[items]]
+kind = "box"
+id = "lower_shelf"
+material = "wood"
+placement = "on_top_of"
+target = "left_support"
+size = [2.73, 0.12, 0.4]
+offset = [1.475, -1.02, 0.0]
+
+[[items]]
+kind = "box"
+id = "book_1"
+material = "book_olive"
+placement = "on_top_of"
+target = "table_top"
+size = [0.46, 0.08, 0.3]
+offset = [-1.1, 0.0, 0.02]
+
+[[items]]
+kind = "box"
+id = "book_2"
+material = "book_clay"
+placement = "on_top_of"
+target = "book_1"
+size = [0.42, 0.07, 0.28]
+offset = [0.03, 0.0, 0.02]
+
+[[items]]
+kind = "box"
+id = "book_3"
+material = "book_linen"
+placement = "on_top_of"
+target = "book_2"
+size = [0.38, 0.06, 0.26]
+offset = [0.02, 0.0, 0.01]
+
+[[items]]
+kind = "sphere"
+id = "ceramic_bowl"
+material = "ceramic"
+placement = "on_top_of"
+target = "table_top"
+radius = 0.19
+offset = [1.0, 0.0, -0.02]
+
+[[items]]
+kind = "quad"
+id = "rug_panel"
+material = "rug"
+corner = [0.15, 0.004, -1.45]
+u_edge = [0.0, 0.0, 1.28]
+v_edge = [1.72, 0.0, 0.0]
+
+[[items]]
+kind = "box"
+id = "magazine_1"
+material = "magazine_cover"
+placement = "on_floor"
+at = [0.98, -0.86]
+size = [0.68, 0.06, 0.46]
+rotation_y = -14.0
+
+[[items]]
+kind = "box"
+id = "magazine_2"
+material = "book_olive"
+placement = "on_top_of"
+target = "magazine_1"
+size = [0.6, 0.045, 0.4]
+offset = [0.02, 0.0, -0.01]
+rotation_y = -8.0
+
+[[items]]
+kind = "box"
+id = "magazine_3"
+material = "magazine_paper"
+placement = "on_top_of"
+target = "magazine_2"
+size = [0.52, 0.035, 0.34]
+offset = [0.01, 0.0, -0.005]
+rotation_y = -10.0
+
+[[items]]
+kind = "quad"
+id = "art_panel"
+material = "art"
+corner = [-1.55, 2.25, -4.39]
+u_edge = [2.55, 0.0, 0.0]
+v_edge = [0.0, 1.45, 0.0]
+
+[[items]]
+kind = "quad"
+id = "frame_top"
+material = "frame"
+corner = [-1.67, 3.70, -4.38]
+u_edge = [2.79, 0.0, 0.0]
+v_edge = [0.0, 0.1, 0.0]
+
+[[items]]
+kind = "quad"
+id = "frame_bottom"
+material = "frame"
+corner = [-1.67, 2.15, -4.38]
+u_edge = [2.79, 0.0, 0.0]
+v_edge = [0.0, 0.1, 0.0]
+
+[[items]]
+kind = "quad"
+id = "frame_left"
+material = "frame"
+corner = [-1.67, 2.25, -4.38]
+u_edge = [0.1, 0.0, 0.0]
+v_edge = [0.0, 1.45, 0.0]
+
+[[items]]
+kind = "quad"
+id = "frame_right"
+material = "frame"
+corner = [1.02, 2.25, -4.38]
+u_edge = [0.1, 0.0, 0.0]
+v_edge = [0.0, 1.45, 0.0]

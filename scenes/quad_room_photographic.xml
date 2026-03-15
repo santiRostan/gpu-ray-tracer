@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scene name="quad_room_photographic">
+  <render>
+    <image_width>1280</image_width>
+    <image_height>720</image_height>
+    <samples_per_pixel>8000</samples_per_pixel>
+    <max_depth>16</max_depth>
+  </render>
+  <environment>
+    <texture>environments/studio_small_01_1k.hdr</texture>
+    <intensity>1.15</intensity>
+    <rotation_degrees>115</rotation_degrees>
+  </environment>
+  <film>
+    <tone_mapping>
+      <exposure>1</exposure>
+      <gamma>2.2</gamma>
+    </tone_mapping>
+    <bloom>
+      <threshold>1.15</threshold>
+      <intensity>0.05</intensity>
+    </bloom>
+  </film>
+  <camera>
+    <position x="0" y="1.9" z="7.8" />
+    <look_at x="0" y="1.7" z="0.8" />
+    <up x="0" y="1" z="0" />
+    <fov>48</fov>
+    <aperture>0</aperture>
+    <focus_distance>7.2</focus_distance>
+  </camera>
+  <materials>
+    <material id="white" type="lambertian">
+      <color r="0.64" g="0.64" b="0.62" />
+    </material>
+    <material id="backdrop" type="lambertian">
+      <color r="0.66" g="0.64" b="0.6" />
+    </material>
+    <material id="red" type="lambertian">
+      <color r="0.78" g="0.26" b="0.2" />
+    </material>
+    <material id="blue" type="lambertian">
+      <color r="0.2" g="0.3" b="0.78" />
+    </material>
+    <material id="metal" type="metal">
+      <color r="0.88" g="0.84" b="0.78" />
+      <fuzz>0.08</fuzz>
+    </material>
+    <material id="silver" type="metal">
+      <color r="0.92" g="0.93" b="0.95" />
+      <fuzz>0.03</fuzz>
+    </material>
+    <material id="green" type="lambertian">
+      <color r="0.34" g="0.66" b="0.46" />
+    </material>
+  </materials>
+  <objects>
+    <quad id="floor" material="white">
+      <corner x="-5.5" y="0" z="-6" />
+      <u_edge x="0" y="0" z="16" />
+      <v_edge x="11" y="0" z="0" />
+    </quad>
+    <quad id="left_wall" material="red">
+      <corner x="-5" y="0" z="-4" />
+      <u_edge x="0" y="5.8" z="0" />
+      <v_edge x="0" y="0" z="7" />
+    </quad>
+    <quad id="right_wall" material="blue">
+      <corner x="5" y="0" z="-4" />
+      <u_edge x="0" y="0" z="7" />
+      <v_edge x="0" y="5.8" z="0" />
+    </quad>
+    <quad id="back_wall" material="backdrop">
+      <corner x="-5" y="0" z="-4" />
+      <u_edge x="10" y="0" z="0" />
+      <v_edge x="0" y="5.8" z="0" />
+    </quad>
+    <quad id="ceiling_back" material="backdrop">
+      <corner x="-5" y="5.8" z="-4" />
+      <u_edge x="10" y="0" z="0" />
+      <v_edge x="0" y="0" z="2.8" />
+    </quad>
+    <quad id="ceiling_left" material="backdrop">
+      <corner x="-5" y="5.8" z="-1.2" />
+      <u_edge x="3.2" y="0" z="0" />
+      <v_edge x="0" y="0" z="4.2" />
+    </quad>
+    <quad id="ceiling_right" material="backdrop">
+      <corner x="1.8" y="5.8" z="-1.2" />
+      <u_edge x="3.2" y="0" z="0" />
+      <v_edge x="0" y="0" z="4.2" />
+    </quad>
+    <box id="left_tower" material="metal">
+      <center x="-1.55" y="2.05" z="-1.6" />
+      <size x="1.65" y="4.1" z="1.65" />
+      <rotation y="-18" />
+    </box>
+    <box id="right_cube" material="green">
+      <center x="1.75" y="0.925" z="0.65" />
+      <size x="1.85" y="1.85" z="1.85" />
+      <rotation y="12" />
+    </box>
+    <sphere id="glass_orb" material="silver">
+      <center x="0.15" y="0.72" z="2.55" />
+      <radius>0.72</radius>
+    </sphere>
+  </objects>
+</scene>

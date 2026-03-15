@@ -33,6 +33,7 @@ Usage
 - Pick or edit an XML scene in the `scenes/` directory (files like `cornell_box.xml`, `minimal.xml`).
 - Run the built executable and choose a scene when prompted.
 - The renderer writes PNG images to the `renders/` folder (or the program's output path).
+- For easier authoring, you can build XML from TOML specs in `scene_specs/` with the helper scripts in `tools/`.
 
 What to expect in the repo
 - `include/` — headers for vectors, geometry, materials, and the XML scene loader
@@ -41,6 +42,47 @@ What to expect in the repo
 - `renders/` — example outputs
 
 If you want a quick edit to a scene: open a file under `scenes/`, tweak camera, materials or objects, and run the program again.
+
+## Scene Authoring Workflow
+
+Writing raw XML is still supported, but new scenes are much easier to iterate on through the TOML-based builder workflow:
+
+```powershell
+python tools/scene_lint.py scene_specs/studio_pedestals.toml
+python tools/scene_builder.py scene_specs/studio_pedestals.toml
+python tools/scene_builder.py scene_specs/studio_pedestals.toml --draft
+python tools/scene_render.py scene_specs/studio_pedestals.toml --draft
+```
+
+That workflow lets you use higher-level placements such as:
+- `placement = "on_floor"` with `at = [x, z]`
+- `placement = "on_top_of"` with `target = "some_item_id"`
+
+It also supports explicit room surfaces through generic quads:
+- `kind = "floor_quad"` for the simple horizontal-floor helper
+- `kind = "quad"` with `corner`, `u_edge`, and `v_edge` for walls, ceilings, windows, and openings
+
+It also supports camera auto-framing so you do not have to hand-tune every camera position:
+- `frame = "all"` to frame the whole arrangement
+- `frame_target = "item_id"` to frame a specific hero object
+- `view_direction`, `target_offset`, and `distance_scale` to steer composition
+
+The linter catches common scene mistakes before you render:
+- overlapping solids
+- floating absolute placements
+- objects clipping below the floor plane
+- camera look-at points that drift away from the main subject
+
+The builder writes standard XML scenes into `scenes/`, so the renderer itself does not need to change.
+The render helper writes XML and then launches the renderer directly with `--scene`, so iteration no longer depends on the interactive menu.
+
+Current examples:
+- Spec: `scene_specs/studio_pedestals.toml`
+- Generated scene: `scenes/studio_pedestals.xml`
+- Draft scene: `scenes/studio_pedestals_draft.xml`
+- Quad room example: `scene_specs/quad_room_showcase.toml`
+- Synthetic HDR generator: `tools/generate_studio_environment.py`
+- Templates: `scene_specs/templates/`
 
 ## Features
 
@@ -63,4 +105,3 @@ This project uses the following open-source libraries:
 - [TinyXML2](https://github.com/leethomason/tinyxml2) — XML parsing (zlib license)
 - [stb_image_write](https://github.com/nothings/stb) — PNG image output (public domain or MIT license)
 - [stb_image](https://github.com/nothings/stb) — PNG image loading (public domain or MIT license)
-

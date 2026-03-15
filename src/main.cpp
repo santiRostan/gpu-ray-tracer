@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <algorithm>
 #include "geometry/hittable.h"
 #include "geometry/bvh.h"
 #include "scene/camera.h"
@@ -13,7 +14,7 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
     cout << "Starting CUDA ray tracer..." << endl;
     try {
         initialize_cuda();
@@ -37,23 +38,77 @@ int main() {
     // Sort scene files for consistent ordering
     sort(scene_files.begin(), scene_files.end());
 
-    // Show available XML scene files with numbers
-    cout << "\nAvailable scenes:" << endl;
-    for (size_t i = 0; i < scene_files.size(); ++i) {
-        cout << "  " << (i + 1) << ". " << scene_files[i] << endl;
+    string requested_scene;
+    bool list_scenes_only = false;
+    for (int i = 1; i < argc; ++i) {
+        const string arg = argv[i];
+        if (arg == "--scene") {
+            if (i + 1 >= argc) {
+                cerr << "Missing value for --scene" << endl;
+                return 1;
+            }
+            requested_scene = argv[++i];
+        } else if (arg == "--list-scenes") {
+            list_scenes_only = true;
+        } else {
+            cerr << "Unknown argument: " << arg << endl;
+            return 1;
+        }
     }
-    cout << "\nEnter scene number (1-" << scene_files.size();
-    cout << "): ";
-    int choice;
-    cin >> choice;
-    string xml_filename;
 
-    // Validate choice and get filename
-    if (choice >= 1 && choice <= static_cast<int>(scene_files.size())) {
-        xml_filename = scenes_path + scene_files[choice - 1];
+    if (scene_files.empty() && requested_scene.empty()) {
+        cerr << "No scenes found in " << scenes_path << endl;
+        return 1;
+    }
+
+    if (!scene_files.empty() && (requested_scene.empty() || list_scenes_only)) {
+        cout << "\nAvailable scenes:" << endl;
+        for (size_t i = 0; i < scene_files.size(); ++i) {
+            cout << "  " << (i + 1) << ". " << scene_files[i] << endl;
+        }
+    }
+
+    if (list_scenes_only && requested_scene.empty()) {
+        return 0;
+    }
+
+    string xml_filename;
+    if (!requested_scene.empty()) {
+        filesystem::path requested_path(requested_scene);
+        if (requested_path.is_relative()) {
+            filesystem::path direct_candidate = requested_path;
+            filesystem::path scene_candidate = scenes_dir / requested_path;
+            if (exists(direct_candidate)) {
+                requested_path = direct_candidate;
+            } else if (exists(scene_candidate)) {
+                requested_path = scene_candidate;
+            } else if (!requested_path.has_parent_path()) {
+                filesystem::path filename_candidate = scenes_dir / requested_path.filename();
+                if (exists(filename_candidate)) {
+                    requested_path = filename_candidate;
+                }
+            }
+        }
+
+        if (!exists(requested_path)) {
+            cerr << "Scene file not found: " << requested_scene << endl;
+            return 1;
+        }
+
+        xml_filename = filesystem::absolute(requested_path).lexically_normal().string();
     } else {
-        cout << "Invalid choice. Using first scene." << endl;
-        xml_filename = scenes_path + scene_files[0];
+        cout << "\nEnter scene number (1-" << scene_files.size();
+        cout << "): ";
+        int choice;
+        cin >> choice;
+
+        // Validate choice and get filename
+        if (choice >= 1 && choice <= static_cast<int>(scene_files.size())) {
+            xml_filename = scenes_path + scene_files[choice - 1];
+        } else {
+            cout << "Invalid choice. Using first scene." << endl;
+            xml_filename = scenes_path + scene_files[0];
+        }
     }
 
     try {
