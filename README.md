@@ -103,10 +103,6 @@ Current examples:
 - **XML + TOML Scene Loading:** All scenes are rendered from XML, with optional TOML helpers for higher-level authoring and linting.
 - **BVH Acceleration Structure:** Hierarchical bounding volume structure for O(log n) ray-object intersection testing.
 
-### Planned / Future
-- **Astigmatism Simulation:** Planned feature to simulate optical astigmatism, allowing for realistic rendering of vision defects.
-- **Advanced Materials:** Subsurface scattering, anisotropic materials, and more.
-
 ## Third-Party Libraries
 This project uses the following open-source libraries:
 
