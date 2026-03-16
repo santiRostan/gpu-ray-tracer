@@ -87,6 +87,7 @@ TextureData load_texture(const std::string& filename) {
         if (ppm_probe && magic == "P3") {
             return load_ascii_ppm_texture(filename);
         }
+        // Fall through for binary PPM (P6) files, which stb_image can decode.
     }
 
     if (is_hdr) {
