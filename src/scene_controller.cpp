@@ -42,7 +42,7 @@ void build_environment_sampling_data(
     double total_weight = 0.0;
     for (int y = 0; y < height; ++y) {
         const float theta = static_cast<float>(M_PI) * (static_cast<float>(y) + 0.5f) / static_cast<float>(height);
-        const float sin_theta = std::max(1.0e-4f, std::sinf(theta));
+        const float sin_theta = std::max(1.0e-4f, std::sin(theta));
         for (int x = 0; x < width; ++x) {
             const int texel_index = y * width + x;
             const float weight = std::max(0.0f, environment_luminance(texture, texel_index)) * sin_theta;
@@ -55,7 +55,7 @@ void build_environment_sampling_data(
         total_weight = 0.0;
         for (int y = 0; y < height; ++y) {
             const float theta = static_cast<float>(M_PI) * (static_cast<float>(y) + 0.5f) / static_cast<float>(height);
-            const float sin_theta = std::max(1.0e-4f, std::sinf(theta));
+            const float sin_theta = std::max(1.0e-4f, std::sin(theta));
             for (int x = 0; x < width; ++x) {
                 const int texel_index = y * width + x;
                 weights[texel_index] = sin_theta;
@@ -76,7 +76,7 @@ void build_environment_sampling_data(
     const float jacobian = 2.0f * static_cast<float>(M_PI) * static_cast<float>(M_PI);
     for (int y = 0; y < height; ++y) {
         const float theta = static_cast<float>(M_PI) * (static_cast<float>(y) + 0.5f) / static_cast<float>(height);
-        const float sin_theta = std::max(1.0e-4f, std::sinf(theta));
+        const float sin_theta = std::max(1.0e-4f, std::sin(theta));
         for (int x = 0; x < width; ++x) {
             const int texel_index = y * width + x;
             const float probability_mass = static_cast<float>(weights[texel_index] / total_weight);
