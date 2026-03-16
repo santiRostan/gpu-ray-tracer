@@ -208,22 +208,44 @@ void create_scene_from_xml(
             float* d_env_pixels = nullptr;
             float* d_env_sampling_cdf = nullptr;
             float* d_env_pdf_omega = nullptr;
-            throw_on_cuda_error(
-                cudaMalloc(&d_env_pixels, env_texture.data.size() * sizeof(float)),
-                "Failed to allocate environment texture on the GPU");
+            const auto free_partial_environment_buffers = [&]() {
+                if (d_env_pixels) {
+                    cudaFree(d_env_pixels);
+                    d_env_pixels = nullptr;
+                }
+                if (d_env_sampling_cdf) {
+                    cudaFree(d_env_sampling_cdf);
+                    d_env_sampling_cdf = nullptr;
+                }
+                if (d_env_pdf_omega) {
+                    cudaFree(d_env_pdf_omega);
+                    d_env_pdf_omega = nullptr;
+                }
+            };
+
+            const cudaError_t pixels_alloc_error = cudaMalloc(&d_env_pixels, env_texture.data.size() * sizeof(float));
+            if (pixels_alloc_error != cudaSuccess) {
+                free_partial_environment_buffers();
+                throw_on_cuda_error(pixels_alloc_error, "Failed to allocate environment texture on the GPU");
+            }
             const cudaError_t copy_error = cudaMemcpy(
                 d_env_pixels, env_texture.data.data(), env_texture.data.size() * sizeof(float), cudaMemcpyHostToDevice);
             if (copy_error != cudaSuccess) {
-                cudaFree(d_env_pixels);
+                free_partial_environment_buffers();
                 throw_on_cuda_error(copy_error, "Failed to upload environment texture to the GPU");
             }
 
-            throw_on_cuda_error(
-                cudaMalloc(&d_env_sampling_cdf, env_sampling_cdf.size() * sizeof(float)),
-                "Failed to allocate environment sampling CDF on the GPU");
-            throw_on_cuda_error(
-                cudaMalloc(&d_env_pdf_omega, env_pdf_omega.size() * sizeof(float)),
-                "Failed to allocate environment PDF table on the GPU");
+            const cudaError_t cdf_alloc_error = cudaMalloc(&d_env_sampling_cdf, env_sampling_cdf.size() * sizeof(float));
+            if (cdf_alloc_error != cudaSuccess) {
+                free_partial_environment_buffers();
+                throw_on_cuda_error(cdf_alloc_error, "Failed to allocate environment sampling CDF on the GPU");
+            }
+
+            const cudaError_t pdf_alloc_error = cudaMalloc(&d_env_pdf_omega, env_pdf_omega.size() * sizeof(float));
+            if (pdf_alloc_error != cudaSuccess) {
+                free_partial_environment_buffers();
+                throw_on_cuda_error(pdf_alloc_error, "Failed to allocate environment PDF table on the GPU");
+            }
 
             const cudaError_t cdf_copy_error = cudaMemcpy(
                 d_env_sampling_cdf,
@@ -231,9 +253,7 @@ void create_scene_from_xml(
                 env_sampling_cdf.size() * sizeof(float),
                 cudaMemcpyHostToDevice);
             if (cdf_copy_error != cudaSuccess) {
-                cudaFree(d_env_pixels);
-                cudaFree(d_env_sampling_cdf);
-                cudaFree(d_env_pdf_omega);
+                free_partial_environment_buffers();
                 throw_on_cuda_error(cdf_copy_error, "Failed to upload environment sampling CDF to the GPU");
             }
 
@@ -243,9 +263,7 @@ void create_scene_from_xml(
                 env_pdf_omega.size() * sizeof(float),
                 cudaMemcpyHostToDevice);
             if (pdf_copy_error != cudaSuccess) {
-                cudaFree(d_env_pixels);
-                cudaFree(d_env_sampling_cdf);
-                cudaFree(d_env_pdf_omega);
+                free_partial_environment_buffers();
                 throw_on_cuda_error(pdf_copy_error, "Failed to upload environment PDF table to the GPU");
             }
 

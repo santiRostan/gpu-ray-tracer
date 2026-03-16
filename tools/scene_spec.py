@@ -566,13 +566,7 @@ def _item_bounds(item: ResolvedItem) -> tuple[tuple[float, float, float], tuple[
             (item.center[0] - extents[0], item.center[1] - extents[1], item.center[2] - extents[2]),
             (item.center[0] + extents[0], item.center[1] + extents[1], item.center[2] + extents[2]),
         )
-    if item.kind == "floor_quad":
-        vertices = _quad_vertices(item)
-        return (
-            tuple(min(vertex[axis] for vertex in vertices) for axis in range(3)),
-            tuple(max(vertex[axis] for vertex in vertices) for axis in range(3)),
-        )
-    if item.kind == "quad":
+    if item.kind in {"floor_quad", "quad"}:
         vertices = _quad_vertices(item)
         return (
             tuple(min(vertex[axis] for vertex in vertices) for axis in range(3)),
