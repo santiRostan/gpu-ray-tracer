@@ -4,45 +4,45 @@ output = "scenes/cozy_vignette_warm.xml"
 [render]
 image_width = 1280
 image_height = 720
-samples_per_pixel = 10000
+samples_per_pixel = 16000
 max_depth = 12
 
 [draft_render]
 image_width = 640
 image_height = 360
-samples_per_pixel = 384
+samples_per_pixel = 512
 max_depth = 10
 
 [environment]
 texture = "environments/warm_reception_dinner_1k.hdr"
-intensity = 0.86
+intensity = 0.72
 rotation_degrees = 248.0
 
 [film.tone_mapping]
-exposure = 0.97
+exposure = 0.92
 gamma = 2.2
 
 [film.bloom]
-threshold = 1.2
-intensity = 0.03
+threshold = 1.0
+intensity = 0.06
 
 [camera]
-position = [2.65, 1.55, 4.15]
-look_at = [-0.2, 1.32, -2.95]
+position = [2.9, 1.6, 4.75]
+look_at = [-0.1, 1.35, -3.05]
 up = [0.0, 1.0, 0.0]
-fov = 33.0
+fov = 38.0
 aperture = 0.0
-focus_distance = 7.7
+focus_distance = 8.4
 
 [[materials]]
 id = "plaster"
 type = "lambertian"
-color = [0.67, 0.64, 0.61]
+color = [0.60, 0.57, 0.53]
 
 [[materials]]
 id = "ceiling"
 type = "lambertian"
-color = [0.61, 0.58, 0.55]
+color = [0.55, 0.52, 0.49]
 
 [[materials]]
 id = "floor"
@@ -71,8 +71,25 @@ color = [0.72, 0.71, 0.66]
 
 [[materials]]
 id = "frame"
-type = "lambertian"
-color = [0.13, 0.1, 0.08]
+type = "metal"
+color = [0.82, 0.66, 0.36]
+fuzz = 0.14
+
+[[materials]]
+id = "bronze"
+type = "metal"
+color = [0.42, 0.30, 0.18]
+fuzz = 0.18
+
+[[materials]]
+id = "glass"
+type = "dielectric"
+refraction_index = 1.5
+
+[[materials]]
+id = "sconce_light"
+type = "emissive"
+color = [4.0, 3.2, 2.4]
 
 [[materials]]
 id = "art"
@@ -119,11 +136,35 @@ v_edge = [10.5, 0.0, 0.0]
 
 [[items]]
 kind = "quad"
-id = "back_wall"
+id = "back_wall_bottom"
 material = "plaster"
 corner = [-4.8, 0.0, -4.4]
 u_edge = [8.4, 0.0, 0.0]
-v_edge = [0.0, 5.6, 0.0]
+v_edge = [0.0, 2.25, 0.0]
+
+[[items]]
+kind = "quad"
+id = "back_wall_left"
+material = "plaster"
+corner = [-4.8, 2.25, -4.4]
+u_edge = [3.25, 0.0, 0.0]
+v_edge = [0.0, 1.45, 0.0]
+
+[[items]]
+kind = "quad"
+id = "back_wall_right"
+material = "plaster"
+corner = [1.0, 2.25, -4.4]
+u_edge = [2.6, 0.0, 0.0]
+v_edge = [0.0, 1.45, 0.0]
+
+[[items]]
+kind = "quad"
+id = "back_wall_top"
+material = "plaster"
+corner = [-4.8, 3.70, -4.4]
+u_edge = [8.4, 0.0, 0.0]
+v_edge = [0.0, 1.9, 0.0]
 
 [[items]]
 kind = "quad"
@@ -211,13 +252,22 @@ size = [0.38, 0.06, 0.26]
 offset = [0.02, 0.0, 0.01]
 
 [[items]]
-kind = "sphere"
-id = "ceramic_bowl"
-material = "ceramic"
+kind = "box"
+id = "bronze_tray"
+material = "bronze"
 placement = "on_top_of"
 target = "table_top"
-radius = 0.19
+size = [0.68, 0.04, 0.28]
 offset = [1.0, 0.0, -0.02]
+
+[[items]]
+kind = "sphere"
+id = "paperweight"
+material = "glass"
+placement = "on_top_of"
+target = "bronze_tray"
+radius = 0.11
+offset = [0.0, 0.01, 0.0]
 
 [[items]]
 kind = "quad"
@@ -258,11 +308,51 @@ rotation_y = -10.0
 
 [[items]]
 kind = "quad"
-id = "art_panel"
-material = "art"
-corner = [-1.55, 2.25, -4.39]
+id = "window_glass_inner"
+material = "glass"
+corner = [-1.55, 2.25, -4.36]
 u_edge = [2.55, 0.0, 0.0]
 v_edge = [0.0, 1.45, 0.0]
+
+[[items]]
+kind = "quad"
+id = "window_glass_outer"
+material = "glass"
+corner = [-1.55, 2.25, -4.40]
+u_edge = [0.0, 1.45, 0.0]
+v_edge = [2.55, 0.0, 0.0]
+
+[[items]]
+kind = "quad"
+id = "left_sconce_backplate"
+material = "bronze"
+corner = [-2.55, 2.30, -4.385]
+u_edge = [0.56, 0.0, 0.0]
+v_edge = [0.0, 1.28, 0.0]
+
+[[items]]
+kind = "quad"
+id = "left_sconce_diffuser"
+material = "sconce_light"
+corner = [-2.48, 2.38, -4.37]
+u_edge = [0.42, 0.0, 0.0]
+v_edge = [0.0, 1.12, 0.0]
+
+[[items]]
+kind = "quad"
+id = "right_sconce_backplate"
+material = "bronze"
+corner = [1.41, 2.30, -4.385]
+u_edge = [0.56, 0.0, 0.0]
+v_edge = [0.0, 1.28, 0.0]
+
+[[items]]
+kind = "quad"
+id = "right_sconce_diffuser"
+material = "sconce_light"
+corner = [1.48, 2.38, -4.37]
+u_edge = [0.42, 0.0, 0.0]
+v_edge = [0.0, 1.12, 0.0]
 
 [[items]]
 kind = "quad"

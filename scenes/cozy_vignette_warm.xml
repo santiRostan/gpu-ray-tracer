@@ -3,38 +3,38 @@
   <render>
     <image_width>1280</image_width>
     <image_height>720</image_height>
-    <samples_per_pixel>10000</samples_per_pixel>
+    <samples_per_pixel>16000</samples_per_pixel>
     <max_depth>12</max_depth>
   </render>
   <environment>
     <texture>environments/warm_reception_dinner_1k.hdr</texture>
-    <intensity>0.86</intensity>
+    <intensity>0.72</intensity>
     <rotation_degrees>248</rotation_degrees>
   </environment>
   <film>
     <tone_mapping>
-      <exposure>0.97</exposure>
+      <exposure>0.92</exposure>
       <gamma>2.2</gamma>
     </tone_mapping>
     <bloom>
-      <threshold>1.2</threshold>
-      <intensity>0.03</intensity>
+      <threshold>1</threshold>
+      <intensity>0.06</intensity>
     </bloom>
   </film>
   <camera>
-    <position x="2.65" y="1.55" z="4.15" />
-    <look_at x="-0.2" y="1.32" z="-2.95" />
+    <position x="2.9" y="1.6" z="4.75" />
+    <look_at x="-0.1" y="1.35" z="-3.05" />
     <up x="0" y="1" z="0" />
-    <fov>33</fov>
+    <fov>38</fov>
     <aperture>0</aperture>
-    <focus_distance>7.7</focus_distance>
+    <focus_distance>8.4</focus_distance>
   </camera>
   <materials>
     <material id="plaster" type="lambertian">
-      <color r="0.67" g="0.64" b="0.61" />
+      <color r="0.6" g="0.57" b="0.53" />
     </material>
     <material id="ceiling" type="lambertian">
-      <color r="0.61" g="0.58" b="0.55" />
+      <color r="0.55" g="0.52" b="0.49" />
     </material>
     <material id="floor" type="lambertian">
       <color r="0.34" g="0.24" b="0.16" />
@@ -51,8 +51,19 @@
     <material id="ceramic" type="lambertian">
       <color r="0.72" g="0.71" b="0.66" />
     </material>
-    <material id="frame" type="lambertian">
-      <color r="0.13" g="0.1" b="0.08" />
+    <material id="frame" type="metal">
+      <color r="0.82" g="0.66" b="0.36" />
+      <fuzz>0.14</fuzz>
+    </material>
+    <material id="bronze" type="metal">
+      <color r="0.42" g="0.3" b="0.18" />
+      <fuzz>0.18</fuzz>
+    </material>
+    <material id="glass" type="dielectric">
+      <refraction_index>1.5</refraction_index>
+    </material>
+    <material id="sconce_light" type="emissive">
+      <color r="4" g="3.2" b="2.4" />
     </material>
     <material id="art" type="lambertian">
       <color r="0.35" g="0.46" b="0.34" />
@@ -82,10 +93,25 @@
       <u_edge x="0" y="0" z="11.5" />
       <v_edge x="10.5" y="0" z="0" />
     </quad>
-    <quad id="back_wall" material="plaster">
+    <quad id="back_wall_bottom" material="plaster">
       <corner x="-4.8" y="0" z="-4.4" />
       <u_edge x="8.4" y="0" z="0" />
-      <v_edge x="0" y="5.6" z="0" />
+      <v_edge x="0" y="2.25" z="0" />
+    </quad>
+    <quad id="back_wall_left" material="plaster">
+      <corner x="-4.8" y="2.25" z="-4.4" />
+      <u_edge x="3.25" y="0" z="0" />
+      <v_edge x="0" y="1.45" z="0" />
+    </quad>
+    <quad id="back_wall_right" material="plaster">
+      <corner x="1" y="2.25" z="-4.4" />
+      <u_edge x="2.6" y="0" z="0" />
+      <v_edge x="0" y="1.45" z="0" />
+    </quad>
+    <quad id="back_wall_top" material="plaster">
+      <corner x="-4.8" y="3.7" z="-4.4" />
+      <u_edge x="8.4" y="0" z="0" />
+      <v_edge x="0" y="1.9" z="0" />
     </quad>
     <quad id="left_wall" material="plaster">
       <corner x="-4.8" y="0" z="-4.4" />
@@ -130,9 +156,13 @@
       <center x="-1.275" y="2.04" z="-3.8" />
       <size x="0.38" y="0.06" z="0.26" />
     </box>
-    <sphere id="ceramic_bowl" material="ceramic">
-      <center x="0.775" y="2.05" z="-3.87" />
-      <radius>0.19</radius>
+    <box id="bronze_tray" material="bronze">
+      <center x="0.775" y="1.88" z="-3.87" />
+      <size x="0.68" y="0.04" z="0.28" />
+    </box>
+    <sphere id="paperweight" material="glass">
+      <center x="0.775" y="2.02" z="-3.87" />
+      <radius>0.11</radius>
     </sphere>
     <quad id="rug_panel" material="rug">
       <corner x="0.15" y="0.004" z="-1.45" />
@@ -154,10 +184,35 @@
       <size x="0.52" y="0.035" z="0.34" />
       <rotation y="-10" />
     </box>
-    <quad id="art_panel" material="art">
-      <corner x="-1.55" y="2.25" z="-4.39" />
+    <quad id="window_glass_inner" material="glass">
+      <corner x="-1.55" y="2.25" z="-4.36" />
       <u_edge x="2.55" y="0" z="0" />
       <v_edge x="0" y="1.45" z="0" />
+    </quad>
+    <quad id="window_glass_outer" material="glass">
+      <corner x="-1.55" y="2.25" z="-4.4" />
+      <u_edge x="0" y="1.45" z="0" />
+      <v_edge x="2.55" y="0" z="0" />
+    </quad>
+    <quad id="left_sconce_backplate" material="bronze">
+      <corner x="-2.55" y="2.3" z="-4.385" />
+      <u_edge x="0.56" y="0" z="0" />
+      <v_edge x="0" y="1.28" z="0" />
+    </quad>
+    <quad id="left_sconce_diffuser" material="sconce_light">
+      <corner x="-2.48" y="2.38" z="-4.37" />
+      <u_edge x="0.42" y="0" z="0" />
+      <v_edge x="0" y="1.12" z="0" />
+    </quad>
+    <quad id="right_sconce_backplate" material="bronze">
+      <corner x="1.41" y="2.3" z="-4.385" />
+      <u_edge x="0.56" y="0" z="0" />
+      <v_edge x="0" y="1.28" z="0" />
+    </quad>
+    <quad id="right_sconce_diffuser" material="sconce_light">
+      <corner x="1.48" y="2.38" z="-4.37" />
+      <u_edge x="0.42" y="0" z="0" />
+      <v_edge x="0" y="1.12" z="0" />
     </quad>
     <quad id="frame_top" material="frame">
       <corner x="-1.67" y="3.7" z="-4.38" />
