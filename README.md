@@ -50,7 +50,7 @@ If you want a quick edit to a scene: open a file under `scenes/`, tweak camera, 
 
 ## Scene Authoring Workflow
 
-Writing raw XML is still supported, but new scenes are much easier to iterate on through the TOML-based builder workflow:
+Scenes are rendered from XML. For higher-level authoring and faster iteration, the project also includes a TOML-based builder workflow:
 
 ```powershell
 python tools/scene_lint.py scene_specs/studio_pedestals.toml
