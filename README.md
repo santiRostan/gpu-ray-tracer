@@ -5,12 +5,15 @@
 </p>
 <p align="center">Render of a Cornell Box scene produced by this ray tracer.</p>
 
-This is a simple, compact and learning-oriented GPU ray tracer implemented in C++ and CUDA. It renders scenes defined in XML using Monte Carlo path tracing and writes PNG images. Examples include a Cornell Box, simple spheres, and a BVH stress test.
+This is a simple, compact and learning-oriented GPU ray tracer implemented in C++ and CUDA. It renders scenes defined in XML using Monte Carlo path tracing and writes PNG images. This branch also adds environment-map lighting and a TOML-based scene authoring workflow for quickly iterating on showcase scenes.
 
 Quick highlights
 - Path tracing on the GPU (CUDA kernels)
+- Environment-map lighting with HDR/LDR texture loading
 - Simple material types: diffuse, metal, dielectric (glass), emissive
-- XML scene files in the `scenes/` folder for easy editing
+- XML scene files in the `scenes/` folder for direct editing
+- TOML scene specs plus lint/build/render helpers in `tools/`
+- CLI support for `--scene` and `--list-scenes`
 - BVH acceleration and PNG output via stb_image_write
 
 Prerequisites
@@ -19,27 +22,29 @@ Prerequisites
 
 Quickstart (Windows PowerShell)
 ```powershell
-\build.bat
-.\build\gpu_raytracer.exe
+.\build.bat
+.\build\bin\Release\gpu_raytracer.exe --list-scenes
 ```
 
 Quickstart (Linux/macOS)
 ```bash
 ./build.sh
-./bin/gpu_raytracer
+./build/bin/gpu_raytracer --list-scenes
 ```
 
 Usage
 - Pick or edit an XML scene in the `scenes/` directory (files like `cornell_box.xml`, `minimal.xml`).
-- Run the built executable and choose a scene when prompted.
-- The renderer writes PNG images to the `renders/` folder (or the program's output path).
+- Run the built executable and choose a scene when prompted, or pass `--scene <path-to-xml>` to render a specific file directly.
+- Use `--list-scenes` to print the currently discoverable scene XML files.
+- The renderer writes PNG images next to the source scene XML by default.
 - For easier authoring, you can build XML from TOML specs in `scene_specs/` with the helper scripts in `tools/`.
 
 What to expect in the repo
-- `include/` — headers for vectors, geometry, materials, and the XML scene loader
-- `src/` — the C++ and CUDA source files (CPU/BVH/renderer and CUDA kernels)
-- `scenes/` — example scene XML files
-- `renders/` — example outputs
+- `include/` - headers for vectors, geometry, materials, image loading, and the XML scene loader
+- `src/` - the C++ and CUDA source files (CPU/BVH/renderer and CUDA kernels)
+- `scenes/` - example scene XML files, generated XML from TOML specs, and environment assets
+- `scene_specs/` - higher-level TOML scene specs and templates
+- `tools/` - scene builder, linter, render helper, and HDR generator scripts
 
 If you want a quick edit to a scene: open a file under `scenes/`, tweak camera, materials or objects, and run the program again.
 
@@ -52,6 +57,7 @@ python tools/scene_lint.py scene_specs/studio_pedestals.toml
 python tools/scene_builder.py scene_specs/studio_pedestals.toml
 python tools/scene_builder.py scene_specs/studio_pedestals.toml --draft
 python tools/scene_render.py scene_specs/studio_pedestals.toml --draft
+python tools/scene_render.py scene_specs/studio_pedestals.toml
 ```
 
 That workflow lets you use higher-level placements such as:
@@ -81,6 +87,7 @@ Current examples:
 - Generated scene: `scenes/studio_pedestals.xml`
 - Draft scene: `scenes/studio_pedestals_draft.xml`
 - Quad room example: `scene_specs/quad_room_showcase.toml`
+- Warm interior showcase: `scene_specs/cozy_vignette_warm.toml`
 - Synthetic HDR generator: `tools/generate_studio_environment.py`
 - Templates: `scene_specs/templates/`
 
@@ -88,11 +95,12 @@ Current examples:
 
 ### Current
 - **Path Tracing:** Physically-based rendering using Monte Carlo path tracing.
+- **Environment Lighting:** Lat-long environment maps with HDR/LDR loading, bilinear sampling, rotation controls, and direct-environment importance sampling for diffuse hits.
 - **Material System:** Supports Lambertian (diffuse), Metal, Dielectric (glass), Emissive, and pure Fresnel materials.
 - **Camera System:** Configurable camera with depth of field, aperture, and focus distance.
 - **GPU Acceleration:** CUDA kernels for massively parallel ray tracing.
 - **PNG Output:** High-quality image output using stb_image_write.
-- **XML Scene Loading:** All scenes are defined in XML for easy editing and extension.
+- **XML + TOML Scene Loading:** All scenes are rendered from XML, with optional TOML helpers for higher-level authoring and linting.
 - **BVH Acceleration Structure:** Hierarchical bounding volume structure for O(log n) ray-object intersection testing.
 
 ### Planned / Future
@@ -102,6 +110,6 @@ Current examples:
 ## Third-Party Libraries
 This project uses the following open-source libraries:
 
-- [TinyXML2](https://github.com/leethomason/tinyxml2) — XML parsing (zlib license)
-- [stb_image_write](https://github.com/nothings/stb) — PNG image output (public domain or MIT license)
-- [stb_image](https://github.com/nothings/stb) — PNG image loading (public domain or MIT license)
+- [TinyXML2](https://github.com/leethomason/tinyxml2) - XML parsing (zlib license)
+- [stb_image_write](https://github.com/nothings/stb) - PNG image output (public domain or MIT license)
+- [stb_image](https://github.com/nothings/stb) - PNG image loading (public domain or MIT license)
